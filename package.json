@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "dev-src": "tsx watch ./main.ts",
+    "play": "tsx watch ./main.ts",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

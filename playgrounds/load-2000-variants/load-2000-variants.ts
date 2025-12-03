@@ -1,28 +1,3 @@
-import { after } from 'node:test'
-
-fetch('https://arhausllc-dev.myshopify.com/api/2022-10/graphql.json', {
-  headers: {
-    accept: '*/*',
-    'accept-language': 'en-US,en;q=0.9,es;q=0.8',
-    'content-type': 'application/json',
-    priority: 'u=1, i',
-    'sec-ch-ua':
-      '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"macOS"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-    'x-shopify-storefront-access-token': '96525a30bdc5c14f9df60c1381640ede'
-  },
-  referrer:
-    'https://arhausllc-dev.myshopify.com/products/c?variant=45672608202930&pb=0',
-  body: '{"query":"query {\\n  product(id: \\"gid://shopify/Product/8547215343794\\") {\\n    id\\n    variants(first: 250, after: \\"eyJsYXN0X2lkIjo0NTY3MjYyNDU1NDE2MiwibGFzdF92YWx1ZSI6NTAwLCJvZmZzZXQiOjQ5OX0=\\") {\\n      edges {\\n        node {\\n          \\nquantityAvailable\\navailableForSale\\nquantityRule {\\n  maximum\\n  minimum\\n}\\nid\\nsku\\ntitle\\nbarcode\\nprice {\\n  amount\\n  currencyCode\\n}\\ncompareAtPrice {\\n  amount\\n  currencyCode\\n}\\nselectedOptions {\\n  name\\n  value\\n}\\nimage {\\n  altText\\n  url\\n  width\\n  height\\n}\\nproduct {\\n  ... on Product {\\n    title\\n    id\\n    handle\\n    options {\\n      id\\n      values\\n      name\\n    }\\n    tags\\n    \\nspecial_order_override: metafield(namespace: \\"product\\", key: \\"special_order_override\\") {\\n  value\\n}\\nis_special_order: metafield(namespace: \\"product\\", key: \\"is_special_order\\") {\\n  value\\n}\\n\\n  }\\n}\\n\\nis_drop_ship_from_web: metafield(namespace: \\"product\\", key: \\"is_drop_ship_from_web\\") {\\n  value\\n}\\ndropship_packaging_type: metafield(namespace: \\"product\\", key: \\"dropship_packaging_type\\") {\\n  value\\n}\\nis_ups_shippable: metafield(namespace: \\"product\\", key: \\"is_ups_shippable\\") {\\n  value\\n}\\nis_freeshipping: metafield(namespace: \\"product\\", key: \\"is_freeshipping\\") {\\n  value\\n}\\ncategory_id: metafield(namespace: \\"product\\", key: \\"category_id\\") {\\n  value\\n}\\nprop65_message: metafield(namespace: \\"product\\", key: \\"prop65_message\\") {\\n  value\\n}\\ngiftbox_sku: metafield(namespace: \\"product\\", key: \\"giftbox_sku\\") {\\n  value\\n}\\nvariant_backend_color: metafield(namespace: \\"product\\", key: \\"backend_color\\") {\\n  value\\n}\\nmain_image: metafield(namespace: \\"product\\", key: \\"pdp_main_image\\") {\\n  value\\n}\\nhover_image: metafield(namespace: \\"product\\", key: \\"plp_hover_image\\") {\\n  value\\n}\\navailability_message: metafield(namespace: \\"product\\", key: \\"availability_message\\") {\\n  value\\n}\\navailability_message_override: metafield(namespace: \\"product\\", key: \\"availability_message_override\\") {\\n  value\\n}\\nspecial_order_override: metafield(namespace: \\"product\\", key: \\"special_order_override\\") {\\n  value\\n}\\nis_special_order: metafield(namespace: \\"product\\", key: \\"is_special_order\\") {\\n  value\\n}\\nis_in_stock: metafield(namespace: \\"product\\", key: \\"is_in_stock\\") {\\n  value\\n}\\nmembership_price: metafield(namespace: \\"arhaus_membership\\", key: \\"membership_price\\") {\\n  value \\n}\\nstoris_reference_id: metafield(namespace: \\"storis\\", key: \\"reference_id\\") {\\n  value\\n}\\ncompare_at_price_change_date: metafield(namespace: \\"custom\\", key: \\"compare_at_price_change_date\\") {\\n    value\\n}\\nprice_change_date: metafield(namespace: \\"custom\\", key: \\"price_change_date\\") {\\n  value\\n}\\nis_last_chance: metafield(namespace: \\"product\\", key: \\"is_last_chance\\") {\\n  value\\n}\\ngift_box_handle: metafield(namespace: \\"product\\", key: \\"gift_box_sku\\") {\\n  value\\n}\\nworryfree_plan: metafield(namespace: \\"product\\", key: \\"worryfree_plan\\") {\\n  value\\n}\\nworryfree_protection: metafield(namespace: \\"product\\", key: \\"worryfree_protection\\") {\\n  value\\n}\\nis_warranty_available: metafield(namespace: \\"product\\", key: \\"is_warranty_available\\") {\\n  value\\n}\\nvendor_id: metafield(namespace: \\"product\\", key: \\"vendor_id\\") {\\n  value\\n}\\ngiftproduct_lineitem_id: metafield(namespace: \\"product\\", key: \\"giftproduct_lineitem_id\\") {\\n  value\\n}\\nvariant_dimensions: metafield(namespace: \\"product\\", key: \\"dimensions_json\\") {\\n  value\\n}\\ndimension_details: metafield(namespace: \\"product\\", key: \\"dimension_details\\") {\\n  value\\n}\\nspecification_details: metafield(namespace: \\"product\\", key: \\"specification_details\\") {\\n  value\\n}\\nshipping_and_return: metafield(namespace: \\"product\\", key: \\"shipping_and_return\\") {\\n  value\\n}\\ngallery_images: metafield(namespace: \\"product\\", key: \\"pdp_gallery_image\\") {\\n  value\\n}\\ngallery_image_alt_text: metafield(namespace: \\"product\\", key: \\"pdp_gallery_image_alt_text\\") {\\n  value\\n}\\nswatch_image:  metafield(namespace: \\"product\\", key: \\"swatch_image\\") {\\n  value\\n}\\n\\n\\n        }\\n      }\\n      pageInfo {\\n        hasNextPage\\n        endCursor\\n      }\\n    }\\n  }\\n}","variables":{}}',
-  method: 'POST',
-  mode: 'cors',
-  credentials: 'include'
-})
-
 const {
   test,
   STROEFRONT_ACCESS_TOKEN,
@@ -31,6 +6,7 @@ const {
   VARIANT_COUNT_STRING
 } = process.env
 
+const OUT_IN_VARIANT_COUNT_BREAKPOINT = 1000
 const VARIANTS_PER_REQUEST = 200
 
 const STOREFRONT_QUERY = /* GraphQL */ `
@@ -75,8 +51,6 @@ async function storeFrontApiFetch(variables: Record<string, any> = {}) {
     ...variables
   }
 
-  console.log('Fetching with variables:', variablesWithDefaults)
-
   const res = await fetch(STOREFRONT_API_URL, {
     method: 'POST',
     headers: {
@@ -94,16 +68,58 @@ async function storeFrontApiFetch(variables: Record<string, any> = {}) {
   return data
 }
 
-async function singleBatchLoadProductVariants() {
-  const data = await storeFrontApiFetch()
-  const variants = data.product.variants.edges.map((edge: any) => edge.node)
+async function singleLoopLoadProductVariants(
+  variantCount: number,
+  variableOverrides: Record<string, any> = {}
+) {
+  let hasNextPage = true
+  const variants = []
+
+  do {
+    console.log(
+      `Loading variants: ${variants.length} / ${variantCount}. In ${
+        variableOverrides.REVERSE === true ? 'reverse' : 'forward'
+      } direction.`
+    )
+    const data = await storeFrontApiFetch({
+      FIRST: Math.min(VARIANTS_PER_REQUEST, variantCount - variants.length),
+      ...variableOverrides
+    })
+
+    const newVariants = data.product.variants.edges.map(
+      (edge: any) => edge.node
+    )
+    variants.push(...newVariants)
+
+    const pageInfo = data.product.variants.pageInfo
+
+    hasNextPage = pageInfo.hasNextPage
+  } while (variants.length < variantCount && hasNextPage === true)
 
   return variants
 }
 
-async function multiBatchLoadProductVariants(variantCount: number) {
-  // Implementation for loading variants in multiple batches
-  return []
+async function outInLoopLoadProductVariants(variantCount: number) {
+  const halfVariantCount = Math.ceil(variantCount / 2)
+  const firstHalfVariantCount = halfVariantCount
+  const secondHalfVariantCount = variantCount - halfVariantCount
+
+  const loadPromises = [
+    singleLoopLoadProductVariants(firstHalfVariantCount),
+    singleLoopLoadProductVariants(secondHalfVariantCount, { REVERSE: true })
+  ]
+
+  const promiseRes = await Promise.allSettled(loadPromises)
+  const variants = []
+  for (const res of promiseRes) {
+    if (res.status === 'fulfilled') {
+      variants.push(...res.value)
+    } else {
+      console.error('Error loading variants in out-in loop:', res.reason)
+    }
+  }
+
+  return variants
 }
 
 export default async function () {
@@ -113,12 +129,24 @@ export default async function () {
       throw new Error('Invalid staticProductVariantCount environment variable')
     }
 
-    const variants =
-      variantCount <= VARIANTS_PER_REQUEST
-        ? await singleBatchLoadProductVariants()
-        : await multiBatchLoadProductVariants(variantCount)
+    console.time('Load Product Variants Duration')
 
-    console.log(variantCount, variants.length)
+    if (variantCount <= OUT_IN_VARIANT_COUNT_BREAKPOINT) {
+      console.log(`Loading ${variantCount} variants in a single loop`)
+    } else {
+      console.log(`Loading ${variantCount} variants in out-in loop`)
+    }
+
+    const variants =
+      variantCount <= OUT_IN_VARIANT_COUNT_BREAKPOINT
+        ? await singleLoopLoadProductVariants(variantCount)
+        : await outInLoopLoadProductVariants(variantCount)
+
+    console.timeEnd('Load Product Variants Duration')
+
+    console.log(
+      `Loaded ${variants.length} variants / ${variantCount} expected variants`
+    )
   } catch (error) {
     console.error('Error loading product variants:', error)
   }

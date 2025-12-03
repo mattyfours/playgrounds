@@ -52,7 +52,11 @@ void (async () => {
 
     if (typeof playgroundModule.default === 'function') {
       console.log(
-        `----------\n Running playground: ${playgroundDirectoryName} \n----------`
+        [
+          '------------------------------------------------------',
+          ` Running Playground: ${playgroundDirectoryName} `,
+          '------------------------------------------------------'
+        ].join('\n')
       )
 
       await playgroundModule.default()
