@@ -7,9 +7,7 @@ import dotenv from 'dotenv'
 
 void (async () => {
   try {
-    const params = minimist(process.argv.slice(2))
-
-    const playgroundDirectoryName = params.p
+    const { p: playgroundDirectoryName } = minimist(process.argv.slice(2))
 
     if (
       playgroundDirectoryName === null ||
@@ -38,7 +36,7 @@ void (async () => {
         playgroundDirectoryName,
         '.env'
       )
-      dotenv.config({ path: envPath })
+      dotenv.config({ path: envPath, quiet: true })
     }
 
     const scriptPath = path.join(

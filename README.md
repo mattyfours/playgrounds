@@ -12,7 +12,7 @@ A collection of quick test environments
 ## Running an Envrionment
 
 - Run `yarn play -p playground_directory_name`
-  - Example: `yarn play -p load-2000-variants`
+  - Example: `yarn play -p hello-world`
 
 ## Configure a New Environment
 
