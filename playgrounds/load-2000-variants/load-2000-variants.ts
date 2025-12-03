@@ -1,7 +1,4 @@
-import { variant } from './fragments'
-
 const {
-  test,
   STROEFRONT_ACCESS_TOKEN,
   STOREFRONT_API_URL,
   PRODUCT_HANDLE,
@@ -23,7 +20,34 @@ const STOREFRONT_QUERY = /* GraphQL */ `
         edges {
           cursor
           node {
-            ${variant}
+            quantityAvailable
+            availableForSale
+            quantityRule {
+              maximum
+              minimum
+            }
+            id
+            sku
+            title
+            barcode
+            price {
+              amount
+              currencyCode
+            }
+            compareAtPrice {
+              amount
+              currencyCode
+            }
+            selectedOptions {
+              name
+              value
+            }
+            image {
+              altText
+              url
+              width
+              height
+            }
           }
         }
         pageInfo {
