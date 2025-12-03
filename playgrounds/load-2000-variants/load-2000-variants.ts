@@ -1,5 +1,5 @@
 const {
-  STROEFRONT_ACCESS_TOKEN,
+  STOREFRONT_ACCESS_TOKEN,
   STOREFRONT_API_URL,
   PRODUCT_HANDLE,
   VARIANT_COUNT_STRING
@@ -62,7 +62,7 @@ const STOREFRONT_QUERY = /* GraphQL */ `
 `
 
 async function storeFrontApiFetch(variables: Record<string, any> = {}) {
-  if (!STOREFRONT_API_URL || !STROEFRONT_ACCESS_TOKEN) {
+  if (!STOREFRONT_API_URL || !STOREFRONT_ACCESS_TOKEN) {
     throw new Error(
       'Missing SHOPIFY_STOREFRONT_API_URL or STOREFRONT_ACCESS_TOKEN environment variables'
     )
@@ -80,7 +80,7 @@ async function storeFrontApiFetch(variables: Record<string, any> = {}) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': STROEFRONT_ACCESS_TOKEN
+      'X-Shopify-Storefront-Access-Token': STOREFRONT_ACCESS_TOKEN
     },
     body: JSON.stringify({
       query: STOREFRONT_QUERY,
