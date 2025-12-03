@@ -1,3 +1,5 @@
+import { variant } from './fragments'
+
 const {
   test,
   STROEFRONT_ACCESS_TOKEN,
@@ -21,8 +23,7 @@ const STOREFRONT_QUERY = /* GraphQL */ `
         edges {
           cursor
           node {
-            title
-            id
+            ${variant}
           }
         }
         pageInfo {
@@ -136,20 +137,23 @@ export default async function () {
       throw new Error('Invalid staticProductVariantCount environment variable')
     }
 
-    console.time('Load Product Variants Duration')
-
     if (variantCount <= OUT_IN_VARIANT_COUNT_BREAKPOINT) {
-      console.log(`Loading ${variantCount} variants in a single loop`)
+      console.log(
+        `Loading ${variantCount} variants for [${PRODUCT_HANDLE}] in a single loop`
+      )
     } else {
-      console.log(`Loading ${variantCount} variants in out-in loop`)
+      console.log(
+        `Loading ${variantCount} variants for [${PRODUCT_HANDLE}] in out-in loop`
+      )
     }
 
+    console.time('\nLoad Product Variants Duration')
     const variants =
       variantCount <= OUT_IN_VARIANT_COUNT_BREAKPOINT
         ? await singleLoopLoadProductVariants(variantCount)
         : await outInLoopLoadProductVariants(variantCount)
 
-    console.timeEnd('Load Product Variants Duration')
+    console.timeEnd('\nLoad Product Variants Duration')
 
     console.log(
       `Loaded ${variants.length} variants / ${variantCount} expected variants`
