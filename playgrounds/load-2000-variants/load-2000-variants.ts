@@ -6,7 +6,7 @@ const {
   VARIANT_COUNT_STRING
 } = process.env
 
-const OUT_IN_VARIANT_COUNT_BREAKPOINT = 1000
+const OUT_IN_VARIANT_COUNT_BREAKPOINT = 200
 const VARIANTS_PER_REQUEST = 200
 
 const STOREFRONT_QUERY = /* GraphQL */ `
@@ -76,13 +76,20 @@ async function singleLoopLoadProductVariants(
   const variants = []
 
   do {
+    const numberOfVariantsToRequest = Math.min(
+      VARIANTS_PER_REQUEST,
+      variantCount - variants.length
+    )
+
     console.log(
-      `Loading variants: ${variants.length} / ${variantCount}. In ${
+      `Loading variants: ${variants.length}-${
+        variants.length + numberOfVariantsToRequest
+      } out of ${variantCount}. In ${
         variableOverrides.REVERSE === true ? 'reverse' : 'forward'
       } direction.`
     )
     const data = await storeFrontApiFetch({
-      FIRST: Math.min(VARIANTS_PER_REQUEST, variantCount - variants.length),
+      FIRST: numberOfVariantsToRequest,
       ...variableOverrides
     })
 
