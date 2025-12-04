@@ -98,6 +98,7 @@ async function singleLoopLoadProductVariants(
   variableOverrides: Record<string, any> = {}
 ) {
   let hasNextPage = true
+  let afterPaginationCursor: string | null = null
   const variants = []
 
   do {
@@ -115,6 +116,7 @@ async function singleLoopLoadProductVariants(
     )
     const data = await storeFrontApiFetch({
       FIRST: numberOfVariantsToRequest,
+      AFTER: afterPaginationCursor,
       ...variableOverrides
     })
 
@@ -124,7 +126,7 @@ async function singleLoopLoadProductVariants(
     variants.push(...newVariants)
 
     const pageInfo = data.product.variants.pageInfo
-
+    afterPaginationCursor = pageInfo.endCursor
     hasNextPage = pageInfo.hasNextPage
   } while (variants.length < variantCount && hasNextPage === true)
 
@@ -176,11 +178,13 @@ export default async function () {
       variantCount <= OUT_IN_VARIANT_COUNT_BREAKPOINT
         ? await singleLoopLoadProductVariants(variantCount)
         : await outInLoopLoadProductVariants(variantCount)
-
     console.timeEnd('\nLoad Product Variants Duration')
 
+    const variantIds = variants.map((variant) => variant.id)
+    const uniqueVariantIds = Array.from(new Set(variantIds))
+
     console.log(
-      `Loaded ${variants.length} variants / ${variantCount} expected variants`
+      `Loaded ${uniqueVariantIds.length} variants / ${variantCount} expected variants`
     )
   } catch (error) {
     console.error('Error loading product variants:', error)
