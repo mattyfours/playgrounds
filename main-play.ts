@@ -1,8 +1,6 @@
-import { readFile } from 'fs/promises'
 import yargs from 'yargs'
 import path from 'path'
 import { exit } from 'process'
-import toml from 'toml'
 import dotenv from 'dotenv'
 import { execSync } from 'child_process'
 import fg from 'fast-glob'
@@ -29,15 +27,15 @@ void (async () => {
       playgroundDirectoryName
     )
 
-    const playgroundPath = path.join(playgroundDirectoryPath, 'playground.toml')
-    const playgroundToml = await readFile(playgroundPath, 'utf-8')
-
-    const { entry = 'play.ts' } = toml.parse(playgroundToml)
+    const [entry] = await fg('play.{js,ts,jsx,tsx}', {
+      cwd: playgroundDirectoryPath,
+      absolute: false
+    })
 
     const envPath = path.join(playgroundDirectoryPath, '.env')
     const envFileExists = existsSync(envPath)
     if (envFileExists) {
-      dotenv.config({ path: envPath, override: true })
+      dotenv.config({ path: envPath, override: true, quiet: true })
     }
 
     const scriptPath = path.join(playgroundDirectoryPath, entry)
