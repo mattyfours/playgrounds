@@ -4,11 +4,10 @@
   "description": "Repo to test scripts",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "play": "tsx watch ./main-play.ts",
+    "play": "yarn run-vite & tsx watch ./main-play.ts",
     "test": "vitest",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build:ts": "tsc",
+    "run-vite": "vite"
   },
   "dependencies": {
     "lit": "^3.1.4"

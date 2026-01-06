@@ -4,7 +4,7 @@ import { exit } from 'process'
 import dotenv from 'dotenv'
 import { execSync } from 'child_process'
 import fg from 'fast-glob'
-import { existsSync } from 'fs'
+import { existsSync, writeFileSync } from 'fs'
 
 void (async () => {
   try {
@@ -32,6 +32,11 @@ void (async () => {
       absolute: false
     })
 
+    const [liquidEntry] = await fg('play.liquid', {
+      cwd: playgroundDirectoryPath,
+      absolute: false
+    })
+
     const envPath = path.join(playgroundDirectoryPath, '.env')
     const envFileExists = existsSync(envPath)
     if (envFileExists) {
@@ -48,8 +53,15 @@ void (async () => {
       [
         '------------------------------------------------------',
         ` Running Playground: ${playgroundDirectoryName} `,
+        ...[
+          liquidEntry !== undefined
+            ? ' - Local URL: http://localhost:3030/'
+            : null
+        ],
         '------------------------------------------------------'
-      ].join('\n')
+      ]
+        .filter(Boolean)
+        .join('\n')
     )
 
     const testFiles = await fg(
@@ -66,11 +78,31 @@ void (async () => {
         stdio: 'inherit',
         cwd: playgroundDirectoryPath
       })
+
+      console.log('------------------------------------------------------\n')
     }
 
-    console.log('------------------------------------------------------\n')
+    if (liquidEntry === undefined) {
+      await playgroundModule.default()
+      return
+    }
 
-    await playgroundModule.default()
+    const tempEntryFile = path.join(process.cwd(), '_entry.ts')
+
+    const scriptPathWithouFileType = scriptPath.replace(
+      /\.(ts|js|tsx|jsx)$/,
+      ''
+    )
+    writeFileSync(
+      tempEntryFile,
+      `
+        import playgroundFunction from '${scriptPathWithouFileType}'
+        async function run() {
+          await playgroundFunction()
+        }
+        run()
+      `
+    )
   } catch (error) {
     console.error('Failed to run playground:', error)
     exit(1)
