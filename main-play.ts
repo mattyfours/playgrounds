@@ -4,7 +4,7 @@ import { exit } from 'process'
 import dotenv from 'dotenv'
 import { execSync } from 'child_process'
 import fg from 'fast-glob'
-import { existsSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 
 void (async () => {
   try {
@@ -51,7 +51,7 @@ void (async () => {
 
     console.log(
       [
-        '------------------------------------------------------',
+        '\n------------------------------------------------------',
         ` Running Playground: ${playgroundDirectoryName} `,
         ...[
           liquidEntry !== undefined
@@ -87,20 +87,40 @@ void (async () => {
       return
     }
 
-    const tempEntryFile = path.join(process.cwd(), '_entry.ts')
-
+    const htmlScriptEntryFile = path.join(process.cwd(), '_entry.ts')
     const scriptPathWithouFileType = scriptPath.replace(
       /\.(ts|js|tsx|jsx)$/,
       ''
     )
+
+    const liquidString = readFileSync(
+      path.join(playgroundDirectoryPath, liquidEntry),
+      'utf-8'
+    )
+
+    const liquidDataPath = path.join(playgroundDirectoryPath, 'liquid.json')
+    const liquidDataFileExists = existsSync(liquidDataPath)
+    const liquidDataString = liquidDataFileExists
+      ? readFileSync(liquidDataPath, 'utf-8')
+      : '{}'
+
+    const cssPath = path.join(playgroundDirectoryPath, 'play.css')
+
     writeFileSync(
-      tempEntryFile,
+      htmlScriptEntryFile,
       `
-        import playgroundFunction from '${scriptPathWithouFileType}'
-        async function run() {
-          await playgroundFunction()
-        }
-        run()
+  /* Auto-generated file. Do not modify directly. */
+  import {liquidParseAndInject, cssInject} from './template-contruct'
+  import playgroundFunction from '${scriptPathWithouFileType}'
+  async function run() {
+
+    await cssInject(\`${existsSync(cssPath) ? cssPath : ''}\`)
+
+    await liquidParseAndInject(\`${liquidString}\`, ${liquidDataString})
+    await playgroundFunction()
+  }
+
+  window.document.addEventListener('DOMContentLoaded', run)
       `
     )
   } catch (error) {

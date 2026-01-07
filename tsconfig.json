@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [ "main-play.ts", "_entry.ts"],
+  "include": ["main-play.ts", "_entry.ts", "playgrounds/**/*"],
 }

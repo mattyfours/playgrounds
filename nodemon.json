@@ -1,0 +1,11 @@
+{
+  "watch": ["playgrounds/**/*", "main-play.ts"],
+  "verbose": false,
+  "quiet": true,
+  "ext": "js,ts,liquid,json",
+  "ignore": ["**/*.test.js", "**/*.spec.js", "node_modules/**", "dist/**"],
+  "exec": "tsx ./main-play.ts",
+  "events": {
+    "start": "cls || clear"
+  }
+}
