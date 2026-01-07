@@ -17,6 +17,4 @@ A collection of quick test environments
 
 ## Configure a New Environment
 
-- Create a new directory in the `playgrounds` directory
-- Create a new TS/JS play file: `play.ts` or `play.js`
-  - Export a default function from this file. This will be the file's entry
+- Run `yarn new` and follow the prompts

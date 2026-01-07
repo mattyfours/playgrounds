@@ -4,7 +4,10 @@ import prompts from 'prompts'
 import { execSync } from 'child_process'
 import { existsSync, writeFileSync } from 'fs'
 
-async function createBasicPlaygroundStructure(newPlaygroundDir: string) {
+async function createBasicPlaygroundStructure(
+  newPlaygroundDir: string,
+  isTypescript: boolean
+) {
   const includeEnv = (await prompts({
     type: 'toggle',
     name: 'value',
@@ -30,6 +33,32 @@ EXAMPLE_KEY=example_value
     `.trim()
     )
   }
+
+  const includeTestFile = (await prompts({
+    type: 'toggle',
+    name: 'value',
+    message: 'Include a test file:',
+    initial: false,
+    active: 'yes',
+    inactive: 'no'
+  })) as { value: boolean }
+
+  if (includeTestFile.value) {
+    writeFileSync(
+      path.join(
+        newPlaygroundDir,
+        isTypescript ? 'play.test.ts' : 'play.test.js'
+      ),
+      `
+import { expect, test } from 'vitest'
+import playFunction from './play'
+
+test('playground runs without errors', async () => {
+  await expect(playFunction()).resolves.not.toThrow()
+})
+      `.trim()
+    )
+  }
 }
 
 async function createFrontendPlaygroundStructure(
@@ -39,7 +68,9 @@ async function createFrontendPlaygroundStructure(
   writeFileSync(
     path.join(newPlaygroundDir, 'play.liquid'),
     `
-<h1 class="text-center m-7">[{{ title }}] Playground!</h1>
+<playground-app class="block">
+  <h1 class="text-center m-7">[{{ title }}] Playground!</h1>
+</playground-app>
     `.trim()
   )
   writeFileSync(
@@ -109,48 +140,40 @@ void (async () => {
     const newPlaygroundDir = path.join(playgroundsDir, playgroundName.value)
 
     execSync(`mkdir -p ${newPlaygroundDir}`)
-    writeFileSync(
-      path.join(newPlaygroundDir, isTypescript ? 'play.ts' : 'play.js'),
-      `
-export default async function playground () {
-  console.log('[${playgroundName.value}] Playground!')
-}
-      `.trim()
-    )
-
-    const includeTestFile = (await prompts({
-      type: 'toggle',
-      name: 'value',
-      message: 'Include a test file:',
-      initial: false,
-      active: 'yes',
-      inactive: 'no'
-    })) as { value: boolean }
-
-    if (includeTestFile.value) {
-      writeFileSync(
-        path.join(
-          newPlaygroundDir,
-          isTypescript.value ? 'play.test.ts' : 'play.test.js'
-        ),
-        `
-import { expect, test } from 'vitest'
-import playFunction from './play${isTypescript.value ? '.ts' : '.js'}'
-
-test('playground runs without errors', async () => {
-  await expect(playFunction()).resolves.not.toThrow()
-})
-      `.trim()
-      )
-    }
 
     if (isFrontEnd.value) {
+      writeFileSync(
+        path.join(newPlaygroundDir, isTypescript ? 'play.ts' : 'play.js'),
+        `
+export default async function playground(): Promise<void> {
+  class Playground extends HTMLElement {
+    constructor() {
+      super()
+      console.log('[${playgroundName.value}] Playground!')
+    }
+  }
+
+  if (window.customElements.get('playground-app') === undefined) {
+    window.customElements.define('playground-app', Playground)
+  }
+}
+
+        `.trim()
+      )
       await createFrontendPlaygroundStructure(
         playgroundName.value,
         newPlaygroundDir
       )
     } else {
-      await createBasicPlaygroundStructure(newPlaygroundDir)
+      writeFileSync(
+        path.join(newPlaygroundDir, isTypescript ? 'play.ts' : 'play.js'),
+        `
+export default async function playground () {
+  console.log('[${playgroundName.value}] Playground!')
+}
+        `.trim()
+      )
+      await createBasicPlaygroundStructure(newPlaygroundDir, isTypescript.value)
     }
   } catch (error) {
     console.error('Failed to run playground:', error)
