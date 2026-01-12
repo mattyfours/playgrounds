@@ -56,7 +56,7 @@ void (async () => {
         ` Running Playground: ${playgroundDirectoryName} `,
         ...[
           liquidEntry !== undefined
-            ? ' - Local URL: http://localhost:3030/'
+            ? ' - Local URL: http://localhost:3030/core/index'
             : null
         ],
         '------------------------------------------------------'
@@ -88,15 +88,10 @@ void (async () => {
       return
     }
 
-    const htmlScriptEntryFile = path.join(process.cwd(), '_entry.ts')
+    const htmlScriptEntryFile = path.join(process.cwd(), 'core', '_entry.ts')
     const scriptPathWithouFileType = scriptPath.replace(
       /\.(ts|js|tsx|jsx)$/,
       ''
-    )
-
-    const liquidString = readFileSync(
-      path.join(playgroundDirectoryPath, liquidEntry),
-      'utf-8'
     )
 
     const liquidDataPath = path.join(playgroundDirectoryPath, 'liquid.json')
@@ -116,7 +111,7 @@ void (async () => {
       htmlScriptEntryFile,
       `
 /* Auto-generated file. Do not modify directly. */
-import {liquidParseAndInject, cssInject} from './template-contruct'
+import {cssInject} from './template-contruct'
 import playgroundFunction from '${scriptPathWithouFileType}'
 async function run() {
 

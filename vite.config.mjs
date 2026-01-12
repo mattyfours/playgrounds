@@ -4,6 +4,13 @@ import preact from '@preact/preset-vite';
 
 export default defineConfig({
   logLevel: 'silent',
+  build: {
+    rollupOptions: {
+      input: {
+        app: 'index.html',
+      },
+    },
+  },
   server: {
     port: 3030,
     hmr: true,
