@@ -18,3 +18,8 @@ A collection of quick test environments
 ## Configure a New Environment
 
 - Run `yarn new` and follow the prompts
+
+## Notes
+
+- Add liquid snippets in a `/snippets` directory, inside your playground
+- Non-Frontend playgrounds can use a `.env` file
