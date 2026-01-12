@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
+import preact from '@preact/preset-vite';
 
 export default defineConfig({
   logLevel: 'silent',
@@ -11,6 +12,7 @@ export default defineConfig({
     }
   },
   plugins: [
-    tailwindcss()
+    tailwindcss(),
+    preact()
   ]
 })

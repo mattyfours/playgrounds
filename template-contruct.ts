@@ -1,18 +1,23 @@
 import { Liquid } from 'liquidjs'
 
-const engine = new Liquid()
-
-export async function liquidParseAndInject(
-  template: string = '',
+export async function liquidParse(
+  playgroundDirectoryPath: string = '.',
   data: Record<string, any> = {}
 ): Promise<string> {
   try {
-    const parsedHtml = await engine.parseAndRender(template, data)
-    document.body.innerHTML = parsedHtml
+    const engine = new Liquid({
+      extname: '.liquid',
+      root: [
+        `${playgroundDirectoryPath}`,
+        `${playgroundDirectoryPath}/snippets/`
+      ]
+    })
+
+    const parsedHtml = await engine.renderFile('play', data)
     return parsedHtml
   } catch (error) {
     console.error('Liquid parsing error:', error)
-    return template
+    return ''
   }
 }
 

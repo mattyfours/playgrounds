@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import { execSync } from 'child_process'
 import fg from 'fast-glob'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { liquidParse } from './template-contruct'
 
 void (async () => {
   try {
@@ -106,22 +107,26 @@ void (async () => {
 
     const cssPath = path.join(playgroundDirectoryPath, 'play.css')
 
+    const liquidData = await liquidParse(
+      playgroundDirectoryPath,
+      JSON.parse(liquidDataString)
+    )
+
     writeFileSync(
       htmlScriptEntryFile,
       `
-  /* Auto-generated file. Do not modify directly. */
-  import {liquidParseAndInject, cssInject} from './template-contruct'
-  import playgroundFunction from '${scriptPathWithouFileType}'
-  async function run() {
+/* Auto-generated file. Do not modify directly. */
+import {liquidParseAndInject, cssInject} from './template-contruct'
+import playgroundFunction from '${scriptPathWithouFileType}'
+async function run() {
 
-    await cssInject(\`${existsSync(cssPath) ? cssPath : ''}\`)
+  document.body.innerHTML = \`${liquidData.replace(/`/g, '\\`')}\`
+  await cssInject(\`${existsSync(cssPath) ? cssPath : ''}\`)
+  await playgroundFunction()
+}
 
-    await liquidParseAndInject(\`${liquidString}\`, ${liquidDataString})
-    await playgroundFunction()
-  }
-
-  window.document.addEventListener('DOMContentLoaded', run)
-      `
+window.document.addEventListener('DOMContentLoaded', run)
+      `.trim()
     )
   } catch (error) {
     console.error('Failed to run playground:', error)

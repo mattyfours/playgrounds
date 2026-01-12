@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "play": "yarn run-vite & nodemon ./main-play",
-     "new": "tsx ./main-new.ts",
+    "new": "tsx ./main-new.ts",
     "test": "vitest",
     "build:ts": "tsc",
     "run-vite": "vite"
   },
   "dependencies": {
-    "lit": "^3.1.4"
+    "@preact/preset-vite": "^2.10.2",
+    "lit": "^3.1.4",
+    "preact": "^10.28.2"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
