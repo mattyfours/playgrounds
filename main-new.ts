@@ -141,7 +141,34 @@ void (async () => {
 
     execSync(`mkdir -p ${newPlaygroundDir}`)
 
-    if (isFrontEnd.value) {
+    if (!isFrontEnd.value) {
+      writeFileSync(
+        path.join(newPlaygroundDir, isTypescript ? 'play.ts' : 'play.js'),
+        `
+export default async function playground () {
+  console.log('[${playgroundName.value}] Playground!')
+}
+        `.trim()
+      )
+      await createBasicPlaygroundStructure(newPlaygroundDir, isTypescript.value)
+
+      return
+    }
+
+    const frameWorkOption = (await prompts({
+      type: 'select',
+      name: 'value',
+      message: 'Framework:',
+      initial: 0,
+      choices: [
+        { title: 'None', value: 'none' },
+        { title: 'Preact', value: 'preact' }
+      ]
+    })) as { value: boolean }
+
+    const frameworkToUse = `${frameWorkOption?.value}`
+
+    if (frameworkToUse === 'none') {
       writeFileSync(
         path.join(newPlaygroundDir, isTypescript ? 'play.ts' : 'play.js'),
         `
@@ -157,24 +184,52 @@ export default async function playground(): Promise<void> {
     window.customElements.define('playground-app', Playground)
   }
 }
-
         `.trim()
       )
-      await createFrontendPlaygroundStructure(
-        playgroundName.value,
-        newPlaygroundDir
-      )
-    } else {
+    } else if (frameworkToUse === 'preact') {
       writeFileSync(
-        path.join(newPlaygroundDir, isTypescript ? 'play.ts' : 'play.js'),
+        path.join(newPlaygroundDir, isTypescript ? 'play.tsx' : 'play.jsx'),
         `
-export default async function playground () {
-  console.log('[${playgroundName.value}] Playground!')
+import { render } from 'preact';
+import { useState } from 'preact/hooks';
+
+function App() {
+  const [number, setNumber] = useState(0);
+
+  const handleNumberClick = () => {
+    setNumber(number + 1);
+  };
+
+  return (
+    <div className="block w-full text-center">
+      <button onClick={handleNumberClick} className="text-center m-7">
+        Clicked {number} times
+      </button>
+    </div>
+  )
+}
+
+export default async function playground(): Promise<void> {
+  class Playground extends HTMLElement {
+    constructor() {
+      super()
+       this.innerHTML = ''
+      render(<App />, this)
+    }
+  }
+
+  if (window.customElements.get('playground-app') === undefined) {
+    window.customElements.define('playground-app', Playground)
+  }
 }
         `.trim()
       )
-      await createBasicPlaygroundStructure(newPlaygroundDir, isTypescript.value)
     }
+
+    await createFrontendPlaygroundStructure(
+      playgroundName.value,
+      newPlaygroundDir
+    )
   } catch (error) {
     console.error('Failed to run playground:', error)
     exit(1)

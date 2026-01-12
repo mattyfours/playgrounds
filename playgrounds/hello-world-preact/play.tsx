@@ -9,11 +9,11 @@ function App() {
   };
 
   return (
-    <>
-      <button onClick={handleNumberClick}>
+    <div className="block w-full text-center">
+      <button onClick={handleNumberClick} className="text-center m-7">
         Clicked {number} times
       </button>
-    </>
+    </div>
   )
 }
 
@@ -21,7 +21,7 @@ export default async function playground(): Promise<void> {
   class Playground extends HTMLElement {
     constructor() {
       super()
-       this.innerHTML = ''
+      this.innerHTML = ''
       render(<App />, this)
     }
   }
