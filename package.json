@@ -4,8 +4,8 @@
   "description": "Repo to test scripts",
   "main": "index.js",
   "scripts": {
-    "play": "yarn run-vite & nodemon ./main-play",
-    "new": "tsx ./main-new.ts",
+    "play": "yarn run-vite & nodemon ./core/main-play",
+    "new": "tsx ./core/main-new.ts",
     "test": "vitest",
     "build:ts": "tsc",
     "run-vite": "vite"

@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3030,
     hmr: true,
     watch: {
-      include: ['**/*.{js,ts,jsx,tsx,liquid,css}', '_entry.ts', 'playgrounds/**/*']
+      include: ['**/*.{js,ts,jsx,tsx,liquid,css}', 'core/_entry.ts', 'playgrounds/**/*']
     }
   },
   plugins: [
