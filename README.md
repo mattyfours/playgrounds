@@ -11,7 +11,7 @@ A collection of quick test environments
 
 ## Running an Envrionment
 
-- Run `yarn play -p playground_directory_name`
+- Run `yarn play -p playground-directory-name`
   - Example: `yarn play -p hello-world`
   - Some playgrounds may require `.env` configuration
 
