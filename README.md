@@ -23,3 +23,23 @@ A collection of quick test environments
 
 - Add liquid snippets in a `/snippets` directory, inside your playground
 - Non-Frontend playgrounds can use a `.env` file
+
+## Custom Liquid Filters
+Custom liquid filters can be ceated in `./core/filters`
+ - Filter object must be included in `./core/filters/custom-filters-imports.ts`
+
+Example Custom Filter Object:
+```
+export const tagWrap = {
+  filterName: 'tag_wrap', // Filter name is what will be used in liquid
+  filterFunction: (input: string, tag: string): string => { // Function to process the filter
+    return `<${tag}>${input}</${tag}>`
+  }
+}
+```
+
+Use In Liquid
+```
+{{ text | tag_wrap: 'strong' }}
+```
+

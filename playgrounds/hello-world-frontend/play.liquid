@@ -6,7 +6,7 @@
 
   <ul class="mt-4">
     {% for item in list %}
-      <li>{{ item }}</li>
+      <li>{{ item | tag_wrap: 'strong' }}</li>
     {% endfor %}
   </ul>
 </div>

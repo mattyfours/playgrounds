@@ -1,4 +1,5 @@
 import { Liquid } from 'liquidjs'
+import customFilters from './filters/custom-filters-imports'
 
 export async function liquidParse(
   playgroundDirectoryPath: string = '.',
@@ -12,6 +13,10 @@ export async function liquidParse(
         `${playgroundDirectoryPath}/snippets/`
       ]
     })
+
+    for (const filter of customFilters) {
+      engine.registerFilter(filter.filterName, filter.filterFunction)
+    }
 
     const parsedHtml = await engine.renderFile('play', data)
     return parsedHtml
