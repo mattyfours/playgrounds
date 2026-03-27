@@ -89,7 +89,7 @@ void (async () => {
     }
 
     const htmlScriptEntryFile = path.join(process.cwd(), 'core', '_entry.ts')
-    const scriptPathWithouFileType = scriptPath.replace(
+    const scriptPathWithoutFileType = scriptPath.replace(
       /\.(ts|js|tsx|jsx)$/,
       ''
     )
@@ -107,20 +107,28 @@ void (async () => {
       JSON.parse(liquidDataString)
     )
 
+    const publicEnvs = Object.entries(process.env)
+      .reduce((publicEnvObject, [key, value]) => {
+        if (key.startsWith('PUBLIC_')) {
+          publicEnvObject[key] = `${value}`
+        }
+        return publicEnvObject
+      }, {} as Record<string, string>)
+
     writeFileSync(
       htmlScriptEntryFile,
       `
 /* Auto-generated file. Do not modify directly. */
 import {cssInject} from './template-contruct'
-import playgroundFunction from '${scriptPathWithouFileType}'
+import playgroundFunction from '${scriptPathWithoutFileType}'
 async function run() {
-
+  window.env = ${JSON.stringify(publicEnvs)}
   document.body.innerHTML = \`${liquidData.replace(/`/g, '\\`')}\`
   await cssInject(\`${existsSync(cssPath) ? cssPath : ''}\`)
   await playgroundFunction()
 }
 
-window.document.addEventListener('DOMContentLoaded', run)
+document.addEventListener('DOMContentLoaded', run)
       `.trim()
     )
   } catch (error) {
