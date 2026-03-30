@@ -7,17 +7,17 @@ A collection of quick test environments
 ## Getting Started
 
 - Clone repo
-- Run `yarn install`
+- Run `npm install`
 
 ## Running an Envrionment
 
-- Run `yarn play -p playground-directory-name`
-  - Example: `yarn play -p hello-world`
+- Run `npm run play -- -p playground-directory-name`
+  - Example: `npm run play -p hello-world`
   - Some playgrounds may require `.env` configuration
 
 ## Configure a New Environment
 
-- Run `yarn new` and follow the prompts
+- Run `npm run new` and follow the prompts
 
 ## Notes
 

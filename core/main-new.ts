@@ -8,32 +8,6 @@ async function createBasicPlaygroundStructure(
   newPlaygroundDir: string,
   isTypescript: boolean
 ) {
-  const includeEnv = (await prompts({
-    type: 'toggle',
-    name: 'value',
-    message: 'Include a .env file:',
-    initial: false,
-    active: 'yes',
-    inactive: 'no'
-  })) as { value: boolean }
-
-  if (includeEnv.value) {
-    writeFileSync(
-      path.join(newPlaygroundDir, '.env'),
-      `
-EXAMPLE_KEY=example_value
-    `.trim()
-    )
-
-    writeFileSync(
-      path.join(newPlaygroundDir, 'example.env'),
-      `
-# Example .env file
-EXAMPLE_KEY=example_value
-    `.trim()
-    )
-  }
-
   const includeTestFile = (await prompts({
     type: 'toggle',
     name: 'value',
@@ -140,6 +114,34 @@ void (async () => {
     const newPlaygroundDir = path.join(playgroundsDir, playgroundName.value)
 
     execSync(`mkdir -p ${newPlaygroundDir}`)
+
+    const includeEnv = (await prompts({
+      type: 'toggle',
+      name: 'value',
+      message: 'Include a .env file:',
+      initial: false,
+      active: 'yes',
+      inactive: 'no'
+    })) as { value: boolean }
+
+    if (includeEnv.value) {
+      writeFileSync(
+        path.join(newPlaygroundDir, '.env'),
+        `
+EXAMPLE_KEY=example_value
+${isFrontEnd.value ? 'PUBLIC_EXAMPLE_KEY=example_value' : ''}
+      `.trim()
+      )
+
+      writeFileSync(
+        path.join(newPlaygroundDir, 'example.env'),
+        `
+# Example .env file
+EXAMPLE_KEY=example_value
+${isFrontEnd.value ? 'PUBLIC_EXAMPLE_KEY=example_value' : ''}
+      `.trim()
+      )
+    }
 
     if (!isFrontEnd.value) {
       writeFileSync(
