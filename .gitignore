@@ -144,4 +144,5 @@ _entry.ts
 
 # Ignore all playgrounds except ones starting with "hello-world-"
 playgrounds/*
-!playgrounds/hello-world-*/**/*
+!playgrounds/hello-world-*/
+!playgrounds/hello-world-*/**
