@@ -1,0 +1,14 @@
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+p {
+  --lines-to-show: 2;
+  --line-height: 1.5em;
+  display: block;
+  margin: 0;
+  line-height: var(--line-height);
+  max-height: calc(var(--lines-to-show) * var(--line-height));
+  overflow: hidden;
+}

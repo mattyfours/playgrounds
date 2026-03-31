@@ -24,6 +24,13 @@ A collection of quick test environments
 - Add liquid snippets in a `/snippets` directory, inside your playground
 - For frontend playgrounds can access `.env` variables through `window.env`. For example: `window.env.PUBLIC_TEST_VALUE`
   - Frontend environment variables must be prefixed with `PUBLIC_`. For example: `PUBLIC_TEST_VALUE="Hello World"`
+- A `play.ts` or `play.js` that exports a `playground` function by `default` is required
+
+```
+export default function playground() {
+  // This function is required
+}
+```
 
 ## Custom Liquid Filters
 Custom liquid filters can be ceated in `./core/filters`
