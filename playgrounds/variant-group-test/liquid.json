@@ -1,0 +1,73 @@
+{
+  "title": "variant-group-test",
+  "variants": [
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 1"
+    },
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 1 B"
+    },
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 1 C"
+    },
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 1 D"
+    },
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 1 E"
+    },
+    {
+      "id": "1234567890",
+      "finish": "gloss",
+      "title": "Test Variant 2"
+    },
+    {
+      "id": "1234567890",
+      "finish": "semi-gloss",
+      "title": "Test Variant 3"
+    },
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 4"
+    },
+    {
+      "id": "1234567890",
+      "finish": "gloss",
+      "title": "Test Variant 5"
+    },
+    {
+      "id": "1234567890",
+      "finish": "semi-gloss",
+      "title": "Test Variant 6"
+    },
+    {
+      "id": "1234567890",
+      "finish": "matte",
+      "title": "Test Variant 7"
+    },
+    {
+      "id": "1234567890",
+      "finish": "gloss",
+      "title": "Test Variant 8"
+    },
+    {
+      "id": "1234567890",
+      "title": "Test Variant 9"
+    },
+    {
+      "id": "1234567890",
+      "title": "Test Variant 10"
+    }
+  ]
+}

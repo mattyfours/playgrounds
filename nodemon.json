@@ -3,7 +3,7 @@
   "verbose": false,
   "quiet": true,
   "ext": "js,ts,liquid,json",
-  "ignore": ["**/*.test.js", "**/*.spec.js", "node_modules/**", "dist/**"],
+  "ignore": ["**/*.test.js", "**/*.spec.js", "node_modules/**", "dist/**", "**/*/*.nodemon-ignore.*"],
   "exec": "tsx ./core/main-play.ts",
   "events": {
     "start": "cls || clear"
