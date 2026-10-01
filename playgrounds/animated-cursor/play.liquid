@@ -1,0 +1,24 @@
+<playground-app class="block">
+  <cursor-container class="fixed top-0 left-0 w-full h-full pointer-events-none bg-transparent"></cursor-container>
+  <div class="main-content container mx-auto flex flex-col gap-4">
+    <h1 class="text-center m-7">[{{ title }}] Playground!</h1>
+
+    <div class="flex flex-col gap-4">
+      <div class="w-[10px] h-[10px] bg-red-500"></div>
+    </div>
+    <a href="#" data-cursor="link">Test Link</a>
+
+    <button class="btn btn-primary" data-cursor="button">Test Button</button>
+
+    <input type="text" class="input input-primary" placeholder="Test Input" data-cursor="input">
+
+    <textarea class="textarea textarea-primary" placeholder="Test Textarea" data-cursor="input"></textarea>
+
+    <select class="select select-primary" data-cursor="select">
+      <option value="1">Test Option 1</option>
+      <option value="2">Test Option 2</option>
+    </select>
+
+    <p>Wall Of Text Goes Here</p>
+  </div>
+</playground-app>
